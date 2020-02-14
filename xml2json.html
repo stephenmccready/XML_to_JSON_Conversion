@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Convert XML to JSON</title>
+  <meta name="description" content="Convert XML to JSON">
+  <meta name="author" content="Stephen McCready">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<style>
+#wholepage {margin: 1em;}
+.row {margin-bottom: 1em;}
+</style>
+</head>
+<body>
+<div class="container-fluid" id="wholepage">
+<form>
+	<h6>XML</h6>
+	<div class="row">
+		<textarea id="xmlInput" placeholder="XML goes here" rows="8" cols="50"><note>
+<to>XiaoBin</to>
+<from>Chie</from>
+<heading>Meeting Reminder</heading>
+<body>Thursday 4.30pm</body>
+</note></textarea>
+	</div>
+	<div class="row">
+		<p><button type="button" class="btn btn-primary" id="convert">Convert XML to JSON</button></p>
+	</div>
+	<h6>JSON</h6>
+	<div class="row">
+		<textarea id="jsonOutput" rows="8" cols="50"></textarea>
+	</div>
+</form>
+</div>
+</body>
+<script>
+$(document).ready( function() {
+	$("#convert").click(function(){
+		var Url='https://cors-anywhere.herokuapp.com/https://stephenmccready.com/xml2json.php?xml=' + encodeURI(document.getElementById("xmlInput").value);
+		$.ajax({
+			url: Url,
+			type:"GET",
+			success: function(result){
+				console.log(result);
+				document.getElementById("jsonOutput").value=result;
+			},
+			error:function(error){
+				console.log(error.responseText);
+				alert('Error: ' + error.responseText);
+			}
+		})
+	});
+});
+</script>
+</html>
